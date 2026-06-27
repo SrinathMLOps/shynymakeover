@@ -23,6 +23,13 @@
   menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
   navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
+  // Prevent body scroll when menu is open (mobile optimization)
+  document.addEventListener('touchmove', (e) => {
+    if (navLinks.classList.contains('open')) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
   // services tabs
   const tabBtns = document.querySelectorAll('.tab-btn');
   const panels = document.querySelectorAll('.tab-panel');
