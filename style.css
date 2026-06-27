@@ -340,6 +340,7 @@
     position:relative; 
     overflow:hidden;
     width:100%;
+    -webkit-overflow-scrolling: touch;
   }
   
   .marquee-track{
@@ -348,10 +349,17 @@
     width:max-content;
     animation:marquee-scroll 32s linear infinite;
     animation-play-state: running;
+    -webkit-animation:marquee-scroll 32s linear infinite;
+    -webkit-animation-play-state: running;
+    transform:translateZ(0);
+    -webkit-transform:translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
   
   .gallery-marquee:hover .marquee-track{
     animation-play-state:paused;
+    -webkit-animation-play-state:paused;
   }
   
   @keyframes marquee-scroll{
@@ -363,9 +371,19 @@
     }
   }
   
+  @-webkit-keyframes marquee-scroll{
+    0% {
+      -webkit-transform:translateX(0);
+    }
+    100% {
+      -webkit-transform:translateX(calc(-100% - 1.4rem));
+    }
+  }
+  
   .marquee-card{
     flex:0 0 300px;
     min-width:300px;
+    -webkit-flex:0 0 300px;
   }
   
   .slide-frame{
@@ -379,6 +397,8 @@
     justify-content:center;
     transition:all 0.4s; 
     position:relative;
+    -webkit-user-select:none;
+    user-select:none;
   }
   
   .slide-frame::before{
@@ -404,6 +424,9 @@
     object-fit:cover; 
     display:block; 
     filter:saturate(1.04);
+    -webkit-user-select:none;
+    user-select:none;
+    -webkit-touch-callout:none;
   }
   
   .slide-frame .cap{
@@ -419,15 +442,17 @@
     text-transform:uppercase; 
     color:var(--gold-light); 
     text-align:center;
+    -webkit-user-select:none;
+    user-select:none;
   }
 
   @media (max-width:620px){
-    .marquee-card{flex:0 0 220px; min-width:220px;}
-    .marquee-track{animation-duration:22s;}
+    .marquee-card{flex:0 0 220px; min-width:220px; -webkit-flex:0 0 220px;}
+    .marquee-track{animation-duration:22s; -webkit-animation-duration:22s;}
   }
   
   @media (prefers-reduced-motion: reduce){
-    .marquee-track{animation:none;}
+    .marquee-track{animation:none; -webkit-animation:none;}
   }
 
   /* ---------- testimonial ---------- */

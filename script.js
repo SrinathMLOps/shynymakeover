@@ -22,6 +22,17 @@ if (track) {
     </div>`
   ).join('');
   track.innerHTML = build(false) + build(true);
+  
+  // Force iOS animation restart
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  if (isIOS) {
+    setTimeout(() => {
+      track.style.animation = 'none';
+      setTimeout(() => {
+        track.style.animation = '';
+      }, 100);
+    }, 500);
+  }
 }
 
 // Mobile menu
@@ -94,13 +105,14 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
   }
 }
 
-// MUSIC - Simplified and robust version
+// MUSIC - iOS optimized version
 (function() {
   const toggleBtn = document.getElementById('musicToggle');
   let ctx = null;
   let masterGain = null;
   let muted = false;
   let audioStarted = false;
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   function createAudioContext() {
     try {
@@ -109,7 +121,12 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
         console.log('AudioContext not supported');
         return null;
       }
-      return new AudioContext();
+      const audioCtx = new AudioContext();
+      // Resume for iOS
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
     } catch (e) {
       console.log('AudioContext error:', e);
       return null;
@@ -147,7 +164,7 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
         g.gain.value = 0;
         osc.connect(g);
         g.connect(filter);
-        osc.start();
+        osc.start(ctx.currentTime);
         
         const swell = () => {
           const now = ctx.currentTime;
@@ -186,33 +203,37 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
         const beat = step % melody.length;
         step++;
         
-        const osc = ctx.createOscillator();
-        osc.type = 'triangle';
-        osc.frequency.value = freq;
-        const g = ctx.createGain();
-        const now = ctx.currentTime;
-        g.gain.setValueAtTime(0.0001, now);
-        g.gain.exponentialRampToValueAtTime(0.15, now + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.0001, now + 1.3);
-        osc.connect(g);
-        g.connect(filter);
-        g.connect(delay);
-        osc.start(now);
-        osc.stop(now + 1.4);
+        try {
+          const osc = ctx.createOscillator();
+          osc.type = 'triangle';
+          osc.frequency.value = freq;
+          const g = ctx.createGain();
+          const now = ctx.currentTime;
+          g.gain.setValueAtTime(0.0001, now);
+          g.gain.exponentialRampToValueAtTime(0.15, now + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + 1.3);
+          osc.connect(g);
+          g.connect(filter);
+          g.connect(delay);
+          osc.start(now);
+          osc.stop(now + 1.4);
 
-        if (beat % 4 === 0) {
-          const bell = ctx.createOscillator();
-          bell.type = 'sine';
-          bell.frequency.value = freq * 2;
-          const bg = ctx.createGain();
-          bg.gain.setValueAtTime(0.0001, now);
-          bg.gain.exponentialRampToValueAtTime(0.05, now + 0.04);
-          bg.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
-          bell.connect(bg);
-          bg.connect(filter);
-          bg.connect(delay);
-          bell.start(now);
-          bell.stop(now + 2.3);
+          if (beat % 4 === 0) {
+            const bell = ctx.createOscillator();
+            bell.type = 'sine';
+            bell.frequency.value = freq * 2;
+            const bg = ctx.createGain();
+            bg.gain.setValueAtTime(0.0001, now);
+            bg.gain.exponentialRampToValueAtTime(0.05, now + 0.04);
+            bg.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
+            bell.connect(bg);
+            bg.connect(filter);
+            bg.connect(delay);
+            bell.start(now);
+            bell.stop(now + 2.3);
+          }
+        } catch (e) {
+          console.log('Pluck error:', e);
         }
       };
       
@@ -252,18 +273,32 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     }
   }
 
-  // Initialize
-  ctx = createAudioContext();
-  if (ctx) {
-    if (ctx.state === 'suspended') {
-      const events = ['click', 'touchstart', 'keydown', 'pointerdown', 'scroll', 'mousemove'];
-      events.forEach(event => {
-        document.addEventListener(event, tryResume, { passive: true, once: true });
-      });
-    } else {
-      startAudio();
+  // Initialize with iOS detection
+  setTimeout(() => {
+    ctx = createAudioContext();
+    if (ctx) {
+      if (isIOS) {
+        // iOS requires user gesture - wait for interaction
+        const events = ['touchstart', 'click'];
+        const handler = () => {
+          tryResume();
+          events.forEach(e => document.removeEventListener(e, handler));
+        };
+        events.forEach(e => document.addEventListener(e, handler, { once: true }));
+      } else {
+        // Android can start immediately
+        if (ctx.state === 'suspended') {
+          const handler = () => {
+            tryResume();
+            document.removeEventListener('click', handler);
+          };
+          document.addEventListener('click', handler, { once: true });
+        } else {
+          startAudio();
+        }
+      }
     }
-  }
+  }, 500);
 
   updateIcon(!muted);
 
@@ -271,6 +306,7 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
   if (toggleBtn) {
     toggleBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      e.preventDefault();
       
       if (!ctx) {
         ctx = createAudioContext();
@@ -281,10 +317,12 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
           ctx.resume().then(() => {
             startAudio();
             muted = false;
-          });
+            updateIcon(!muted);
+          }).catch(e => console.log('Resume error:', e));
         } else {
           startAudio();
           muted = false;
+          updateIcon(!muted);
         }
       } else if (masterGain && ctx) {
         muted = !muted;
@@ -293,9 +331,8 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
         } else {
           masterGain.gain.linearRampToValueAtTime(0.8, ctx.currentTime + 1);
         }
+        updateIcon(!muted);
       }
-      
-      updateIcon(!muted);
     });
   }
 })();
