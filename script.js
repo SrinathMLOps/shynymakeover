@@ -86,129 +86,134 @@
     });
   }
 
-  // ---------- original ambient background music (generated in-browser, no audio file needed) ----------
+  // ---------- ambient background music (generated in-browser, mobile optimized) ----------
   (function(){
     const toggleBtn = document.getElementById('musicToggle');
     let ctx = null, masterGain = null, muted = false, resumed = false;
 
     function buildEngine(){
-      ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.value = 2400;
-      masterGain = ctx.createGain();
-      masterGain.gain.value = 0.0001;
-      filter.connect(masterGain);
-      masterGain.connect(ctx.destination);
+      try {
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 2400;
+        masterGain = ctx.createGain();
+        masterGain.gain.value = 0.0001;
+        filter.connect(masterGain);
+        masterGain.connect(ctx.destination);
 
-      // slow-moving 4-chord pad progression (Cmaj7 - Am7 - Fmaj7 - G), gliding between chords
-      const chords = [
-        [261.63, 329.63, 392.00, 493.88], // C maj7 — C E G B
-        [220.00, 261.63, 329.63, 392.00], // A min7 — A C E G
-        [174.61, 220.00, 261.63, 329.63], // F maj7 — F A C E
-        [196.00, 246.94, 293.66, 392.00], // G       — G B D G
-      ];
-      let chordIndex = 0;
-      const padOscs = chords[0].map((f, i) => {
-        const osc = ctx.createOscillator();
-        osc.type = 'sine';
-        osc.frequency.value = f;
-        const g = ctx.createGain();
-        g.gain.value = 0;
-        osc.connect(g);
-        g.connect(filter);
-        osc.start();
-        const swell = () => {
-          const now = ctx.currentTime;
-          g.gain.cancelScheduledValues(now);
-          g.gain.setValueAtTime(g.gain.value, now);
-          g.gain.linearRampToValueAtTime(0.045, now + 4 + i * 0.3);
-          g.gain.linearRampToValueAtTime(0.0, now + 8 + i * 0.3);
-        };
-        swell();
-        setInterval(swell, 8000);
-        return osc;
-      });
-      // glide to the next chord every 8 seconds for a slowly evolving, lush harmony
-      setInterval(() => {
-        chordIndex = (chordIndex + 1) % chords.length;
-        const next = chords[chordIndex];
-        padOscs.forEach((osc, i) => {
-          osc.frequency.setTargetAtTime(next[i], ctx.currentTime, 1.4);
+        // slow-moving 4-chord pad progression (Cmaj7 - Am7 - Fmaj7 - G), gliding between chords
+        const chords = [
+          [261.63, 329.63, 392.00, 493.88], // C maj7 — C E G B
+          [220.00, 261.63, 329.63, 392.00], // A min7 — A C E G
+          [174.61, 220.00, 261.63, 329.63], // F maj7 — F A C E
+          [196.00, 246.94, 293.66, 392.00], // G       — G B D G
+        ];
+        let chordIndex = 0;
+        const padOscs = chords[0].map((f, i) => {
+          const osc = ctx.createOscillator();
+          osc.type = 'sine';
+          osc.frequency.value = f;
+          const g = ctx.createGain();
+          g.gain.value = 0;
+          osc.connect(g);
+          g.connect(filter);
+          osc.start();
+          const swell = () => {
+            const now = ctx.currentTime;
+            g.gain.cancelScheduledValues(now);
+            g.gain.setValueAtTime(g.gain.value, now);
+            g.gain.linearRampToValueAtTime(0.045, now + 4 + i * 0.3);
+            g.gain.linearRampToValueAtTime(0.0, now + 8 + i * 0.3);
+          };
+          swell();
+          setInterval(swell, 8000);
+          return osc;
         });
-      }, 8000);
+        // glide to the next chord every 8 seconds for a slowly evolving, lush harmony
+        setInterval(() => {
+          chordIndex = (chordIndex + 1) % chords.length;
+          const next = chords[chordIndex];
+          padOscs.forEach((osc, i) => {
+            osc.frequency.setTargetAtTime(next[i], ctx.currentTime, 1.4);
+          });
+        }, 8000);
 
-      // a longer, gently rising-and-falling melodic phrase (diatonic to C major)
-      const melody = [
-        392.00, 440.00, 493.88, 440.00, 392.00, 329.63, 293.66, 261.63,
-        293.66, 329.63, 392.00, 440.00, 523.25, 440.00, 392.00, 329.63
-      ];
-      let step = 0;
-      const delay = ctx.createDelay();
-      delay.delayTime.value = 0.5;
-      const feedback = ctx.createGain();
-      feedback.gain.value = 0.32;
-      delay.connect(feedback);
-      feedback.connect(delay);
-      delay.connect(filter);
+        // a longer, gently rising-and-falling melodic phrase (diatonic to C major)
+        const melody = [
+          392.00, 440.00, 493.88, 440.00, 392.00, 329.63, 293.66, 261.63,
+          293.66, 329.63, 392.00, 440.00, 523.25, 440.00, 392.00, 329.63
+        ];
+        let step = 0;
+        const delay = ctx.createDelay();
+        delay.delayTime.value = 0.5;
+        const feedback = ctx.createGain();
+        feedback.gain.value = 0.32;
+        delay.connect(feedback);
+        feedback.connect(delay);
+        delay.connect(filter);
 
-      const pluck = () => {
-        const freq = melody[step % melody.length];
-        const beat = step % melody.length;
-        step++;
-        const osc = ctx.createOscillator();
-        osc.type = 'triangle';
-        osc.frequency.value = freq;
-        const g = ctx.createGain();
-        const now = ctx.currentTime;
-        g.gain.setValueAtTime(0.0001, now);
-        g.gain.exponentialRampToValueAtTime(0.15, now + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.0001, now + 1.3);
-        osc.connect(g);
-        g.connect(filter);
-        g.connect(delay);
-        osc.start(now);
-        osc.stop(now + 1.4);
+        const pluck = () => {
+          const freq = melody[step % melody.length];
+          const beat = step % melody.length;
+          step++;
+          const osc = ctx.createOscillator();
+          osc.type = 'triangle';
+          osc.frequency.value = freq;
+          const g = ctx.createGain();
+          const now = ctx.currentTime;
+          g.gain.setValueAtTime(0.0001, now);
+          g.gain.exponentialRampToValueAtTime(0.15, now + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + 1.3);
+          osc.connect(g);
+          g.connect(filter);
+          g.connect(delay);
+          osc.start(now);
+          osc.stop(now + 1.4);
 
-        // a soft high shimmer bell every fourth note, like distant wind chimes
-        if (beat % 4 === 0){
-          const bell = ctx.createOscillator();
-          bell.type = 'sine';
-          bell.frequency.value = freq * 2;
-          const bg = ctx.createGain();
-          bg.gain.setValueAtTime(0.0001, now);
-          bg.gain.exponentialRampToValueAtTime(0.05, now + 0.04);
-          bg.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
-          bell.connect(bg);
-          bg.connect(filter);
-          bg.connect(delay);
-          bell.start(now);
-          bell.stop(now + 2.3);
-        }
-      };
-      pluck();
-      setInterval(pluck, 700);
+          // a soft high shimmer bell every fourth note, like distant wind chimes
+          if (beat % 4 === 0){
+            const bell = ctx.createOscillator();
+            bell.type = 'sine';
+            bell.frequency.value = freq * 2;
+            const bg = ctx.createGain();
+            bg.gain.setValueAtTime(0.0001, now);
+            bg.gain.exponentialRampToValueAtTime(0.05, now + 0.04);
+            bg.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
+            bell.connect(bg);
+            bg.connect(filter);
+            bg.connect(delay);
+            bell.start(now);
+            bell.stop(now + 2.3);
+          }
+        };
+        pluck();
+        setInterval(pluck, 700);
 
-      // fade the whole mix in gently once audible
-      masterGain.gain.linearRampToValueAtTime(0.8, ctx.currentTime + 2.5);
+        // fade the whole mix in gently once audible
+        masterGain.gain.linearRampToValueAtTime(0.8, ctx.currentTime + 2.5);
+      } catch(e) {
+        console.log('Audio context error:', e);
+      }
     }
 
     function setIcon(playing){
+      if (!toggleBtn) return;
       toggleBtn.classList.toggle('playing', playing);
       toggleBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
       toggleBtn.setAttribute('aria-label', playing ? 'Stop background music' : 'Play background music');
     }
 
-    // build the music engine immediately — no click needed to "start" it on our side
+    // build the music engine immediately
     buildEngine();
     setIcon(true);
 
     // browsers require a user gesture before sound is actually audible;
     // resume the instant any interaction happens, with no prompt or dialog
     function tryResume(){
-      if (resumed || muted) return;
+      if (resumed || muted || !ctx) return;
       if (ctx.state === 'suspended'){
-        ctx.resume().then(() => { resumed = true; cleanup(); });
+        ctx.resume().then(() => { resumed = true; cleanup(); }).catch(() => {});
       } else {
         resumed = true;
         cleanup();
@@ -222,19 +227,25 @@
     ['click','touchstart','keydown','pointerdown','scroll','mousemove'].forEach(evt => {
       window.addEventListener(evt, tryResume, { passive:true });
     });
+    
+    // Try to resume on document ready
+    document.addEventListener('DOMContentLoaded', tryResume);
     tryResume(); // in case the browser allows it right away
 
-    toggleBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (muted){
-        muted = false;
-        if (ctx.state === 'suspended') ctx.resume();
-        masterGain.gain.linearRampToValueAtTime(0.8, ctx.currentTime + 1);
-        setIcon(true);
-      } else {
-        muted = true;
-        masterGain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.6);
-        setIcon(false);
-      }
-    });
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!ctx) buildEngine();
+        if (muted){
+          muted = false;
+          if (ctx && ctx.state === 'suspended') ctx.resume().catch(() => {});
+          if (ctx && masterGain) masterGain.gain.linearRampToValueAtTime(0.8, ctx.currentTime + 1);
+          setIcon(true);
+        } else {
+          muted = true;
+          if (ctx && masterGain) masterGain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.6);
+          setIcon(false);
+        }
+      });
+    }
   })();
