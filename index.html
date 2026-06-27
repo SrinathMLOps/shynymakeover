@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShynyMakeover | Bridal Makeup &amp; Beauty Studio, Mumbai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Italianno&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="cursor-trail t1" id="cursorTrail1" aria-hidden="true"></div>
+<div class="cursor-trail t2" id="cursorTrail2" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+
+<header>
+  <div class="nav-inner">
+    <a href="#home" class="logo">ShynyMakeover<span>Makeover &amp; Hairstylist</span></a>
+    <nav class="links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#packages">Packages</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="https://wa.me/919052331623" class="nav-cta">Book Appointment</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">&#9776;</button>
+  </div>
+</header>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Portfolio</span>
+      <h2>Latest Projects</h2>
+      <p>Scrolling automatically — hover to pause.</p>
+    </div>
+
+    <div class="gallery-marquee">
+      <div class="marquee-track" id="marqueeTrack"></div>
+    </div>
+  </div>
+</section>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="glow-blob" style="width:420px; height:420px; top:-120px; left:-100px;"></div>
+  <div class="glow-blob" style="width:380px; height:380px; bottom:-140px; right:-90px; background:radial-gradient(circle, var(--wine) 0%, transparent 70%); opacity:0.25;"></div>
+
+  <div class="hero-grid">
+    <div class="hero-content">
+      <span class="eyebrow">Lavanya Anil Reddy · Karimnagar</span>
+      <h1>Get the special look<br>for your <em>special day</em></h1>
+      <p class="tag">Bridal makeup, hairstyling, mehendi &amp; draping for every ceremony — Haldi to Reception — crafted with traditional Indian artistry and a modern finish.</p>
+      <div class="hero-cta">
+        <a href="https://wa.me/919052331623" class="btn btn-solid">✆ Book Your Appointment</a>
+        <a href="#services" class="btn btn-ghost">View Services</a>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <div class="hero-rings" aria-hidden="true">
+        <svg viewBox="0 0 560 560">
+          <circle class="ring ring-spin" cx="280" cy="280" r="270"/>
+          <circle class="ring ring-spin-rev" cx="280" cy="280" r="230"/>
+          <circle class="ring" cx="280" cy="280" r="195" stroke-dasharray="4 10"/>
+        </svg>
+      </div>
+      <div class="hero-art-glow" aria-hidden="true"></div>
+      <span class="sparkle" style="top:8%; left:12%; animation-delay:0s;">✦</span>
+      <span class="sparkle" style="top:18%; right:10%; animation-delay:0.8s;">✧</span>
+      <span class="sparkle" style="bottom:14%; left:6%; animation-delay:1.6s;">✦</span>
+      <span class="sparkle" style="bottom:22%; right:4%; animation-delay:2.2s;">✧</span>
+
+      <div class="hero-art-frame">
+        <svg viewBox="0 0 340 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of an Indian bride in traditional bridal jewellery and dupatta">
+          <defs>
+            <linearGradient id="bustGrad" x1="0%" y1="0%" x2="60%" y2="100%">
+              <stop offset="0%" stop-color="#ffe0ec"/>
+              <stop offset="55%" stop-color="#ff6fa8"/>
+              <stop offset="100%" stop-color="#b23463"/>
+            </linearGradient>
+            <linearGradient id="goldLine" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffe9c2"/>
+              <stop offset="100%" stop-color="#ff9ecb"/>
+            </linearGradient>
+          </defs>
+
+          <!-- dupatta drape -->
+          <path d="M252,258 C222,318 200,380 210,480" fill="none" stroke="url(#goldLine)" stroke-width="2" opacity="0.55"/>
+          <path d="M270,270 C246,330 230,392 238,480" fill="none" stroke="url(#goldLine)" stroke-width="2" stroke-dasharray="1 7" opacity="0.8"/>
+          <path d="M286,285 C264,345 252,405 258,480" fill="none" stroke="url(#goldLine)" stroke-width="1.4" opacity="0.4"/>
+
+          <!-- bust silhouette -->
+          <path d="M170,38 C190,38 207,55 210,78 C212,95 205,108 215,118 C223,126 235,128 233,140
+                   C231,150 218,152 214,162 C211,170 218,178 228,184 C255,200 268,230 268,265
+                   L268,480 L72,480 L72,300 C68,255 75,205 95,170 C108,148 105,120 98,98
+                   C93,82 100,60 120,46 C135,36 153,34 170,38 Z"
+                fill="url(#bustGrad)" opacity="0.92"/>
+
+          <!-- bun + flowers -->
+          <circle cx="92" cy="66" r="26" fill="none" stroke="url(#goldLine)" stroke-width="2"/>
+          <g fill="#ffe9c2">
+            <circle cx="68" cy="50" r="3.2"/><circle cx="62" cy="60" r="3"/><circle cx="65" cy="72" r="3"/>
+            <circle cx="108" cy="44" r="3"/><circle cx="116" cy="55" r="3"/>
+          </g>
+
+          <!-- eyebrow + eye -->
+          <path d="M183,93 Q196,87 207,96" fill="none" stroke="#5c1030" stroke-width="2" stroke-linecap="round"/>
+          <path d="M186,109 Q198,114 209,109" fill="none" stroke="#5c1030" stroke-width="2" stroke-linecap="round"/>
+          <path d="M209,109 L216,103" stroke="#5c1030" stroke-width="1.6" stroke-linecap="round"/>
+
+          <!-- maang tikka + bindi -->
+          <path d="M171,40 L165,76" stroke="url(#goldLine)" stroke-width="2"/>
+          <circle cx="164" cy="83" r="5" fill="#ffe9c2"/>
+          <circle cx="161" cy="93" r="3.4" fill="#b23463" stroke="#ffe9c2" stroke-width="1"/>
+
+          <!-- lips tint -->
+          <ellipse cx="223" cy="181" rx="6" ry="3" fill="#5c1030" opacity="0.55"/>
+
+          <!-- jhumka earring -->
+          <circle cx="221" cy="196" r="6.5" fill="none" stroke="url(#goldLine)" stroke-width="2"/>
+          <g stroke="url(#goldLine)" stroke-width="1.6">
+            <line x1="217" y1="203" x2="214" y2="226"/>
+            <line x1="221" y1="204" x2="221" y2="230"/>
+            <line x1="225" y1="203" x2="228" y2="226"/>
+          </g>
+          <g fill="#ffe9c2">
+            <circle cx="214" cy="228" r="2.4"/><circle cx="221" cy="232" r="2.4"/><circle cx="228" cy="228" r="2.4"/>
+          </g>
+
+          <!-- layered necklace -->
+          <path d="M118,258 Q195,292 266,253" fill="none" stroke="url(#goldLine)" stroke-width="2" opacity="0.9"/>
+          <path d="M108,286 Q195,326 266,278" fill="none" stroke="url(#goldLine)" stroke-width="2" opacity="0.75"/>
+          <path d="M188,318 L196,334 L204,318" fill="none" stroke="url(#goldLine)" stroke-width="2"/>
+
+          <!-- scattered sparkles -->
+          <g fill="#ffe9c2" opacity="0.9">
+            <path d="M40,140 l2,7 l7,2 l-7,2 l-2,7 l-2,-7 l-7,-2 l7,-2 Z"/>
+            <path d="M280,90 l1.6,5.5 l5.5,1.6 l-5.5,1.6 l-1.6,5.5 l-1.6,-5.5 l-5.5,-1.6 l5.5,-1.6 Z"/>
+            <path d="M48,360 l1.6,5.5 l5.5,1.6 l-5.5,1.6 l-1.6,5.5 l-1.6,-5.5 l-5.5,-1.6 l5.5,-1.6 Z"/>
+          </g>
+        </svg>
+        <span class="frame-badge">Bridal Look</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-bottom-line"><span></span>Scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-frame">
+      <div class="studio-illustration">
+        <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a bridal photography studio with a camera, ring light and a bride posing in front of a backdrop">
+          <defs>
+            <linearGradient id="studioGold" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffe9c2"/>
+              <stop offset="100%" stop-color="#ff2d78"/>
+            </linearGradient>
+            <linearGradient id="studioBride" x1="0%" y1="0%" x2="60%" y2="100%">
+              <stop offset="0%" stop-color="#ffe0ec"/>
+              <stop offset="60%" stop-color="#ff6fa8"/>
+              <stop offset="100%" stop-color="#b23463"/>
+            </linearGradient>
+          </defs>
+
+          <!-- backdrop curtain -->
+          <g opacity="0.5" stroke="url(#studioGold)" stroke-width="1.2" fill="none">
+            <path d="M40,40 C60,140 50,260 60,430"/>
+            <path d="M90,32 C108,140 100,270 108,430"/>
+            <path d="M340,40 C322,140 332,260 322,430"/>
+            <path d="M300,30 C284,140 292,270 284,430"/>
+          </g>
+          <line x1="20" y1="430" x2="380" y2="430" stroke="url(#studioGold)" stroke-width="1.4" opacity="0.6"/>
+          <!-- floor spot mark -->
+          <g stroke="url(#studioGold)" stroke-width="1.4" opacity="0.7">
+            <line x1="223" y1="425" x2="237" y2="439"/>
+            <line x1="237" y1="425" x2="223" y2="439"/>
+          </g>
+
+          <!-- ring light + stand -->
+          <line x1="335" y1="200" x2="335" y2="420" stroke="url(#studioGold)" stroke-width="2"/>
+          <g stroke="url(#studioGold)" stroke-width="2" opacity="0.85">
+            <line x1="335" y1="418" x2="310" y2="432"/>
+            <line x1="335" y1="418" x2="360" y2="432"/>
+          </g>
+          <circle cx="335" cy="150" r="34" fill="none" stroke="url(#studioGold)" stroke-width="6" opacity="0.9"/>
+          <circle cx="335" cy="150" r="34" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.4"/>
+          <line x1="335" y1="184" x2="335" y2="200" stroke="url(#studioGold)" stroke-width="2"/>
+          <g fill="#ffe9c2" opacity="0.9">
+            <path d="M362,118 l1.6,5.5 l5.5,1.6 l-5.5,1.6 l-1.6,5.5 l-1.6,-5.5 l-5.5,-1.6 l5.5,-1.6 Z"/>
+          </g>
+
+          <!-- bride silhouette posing -->
+          <g>
+            <path d="M198,280 C180,300 172,340 170,400 C168,415 172,425 185,428 L255,428
+                     C268,425 272,415 270,400 C268,340 260,300 242,280
+                     C236,266 234,250 220,246 C206,250 204,266 198,280 Z"
+                  fill="url(#studioBride)" opacity="0.95"/>
+            <circle cx="220" cy="220" r="20" fill="url(#studioBride)"/>
+            <path d="M203,214 C198,250 200,290 196,310" fill="none" stroke="url(#studioGold)" stroke-width="2" opacity="0.6"/>
+            <path d="M237,214 C242,250 240,290 244,310" fill="none" stroke="url(#studioGold)" stroke-width="2" opacity="0.6"/>
+            <g fill="url(#studioGold)" opacity="0.9">
+              <circle cx="212" cy="262" r="5"/><circle cx="220" cy="266" r="5"/><circle cx="228" cy="262" r="5"/>
+            </g>
+          </g>
+
+          <!-- camera + tripod -->
+          <g stroke="url(#studioGold)" stroke-width="2" fill="none">
+            <line x1="100" y1="320" x2="70" y2="430"/>
+            <line x1="100" y1="320" x2="100" y2="430"/>
+            <line x1="100" y1="320" x2="130" y2="430"/>
+          </g>
+          <circle cx="100" cy="316" r="6" fill="url(#studioGold)"/>
+          <rect x="58" y="270" width="84" height="50" rx="8" fill="none" stroke="url(#studioGold)" stroke-width="2.2"/>
+          <rect x="78" y="258" width="28" height="14" rx="3" fill="none" stroke="url(#studioGold)" stroke-width="2"/>
+          <circle cx="100" cy="296" r="20" fill="none" stroke="url(#studioGold)" stroke-width="2.4"/>
+          <circle cx="100" cy="296" r="12" fill="none" stroke="url(#studioGold)" stroke-width="1.4" opacity="0.6"/>
+        </svg>
+      </div>
+      <span class="frame-badge">Bridal Photo Studio</span>
+    </div>
+    <div class="about-copy">
+      <span class="eyebrow">About the studio</span>
+      <h2>Where every bride<br>looks her most radiant self</h2>
+      <p>ShynyMakeover, led by makeup artist Lavanya Anil Reddy, is a Karimnagar-based bridal beauty studio specialising in South Indian, North Indian and traditional bridal looks — built on the belief that makeup should enhance, not mask, who you are.</p>
+      <p>From the first Haldi to the final Reception twirl, our team handles makeup, hair, draping and mehendi so you can simply enjoy the celebration. Our in-house bridal photo studio means your finished look gets captured the same day, under proper studio lighting.</p>
+      <div class="stat-row">
+        <div><strong>500+</strong><span>Brides Styled</span></div>
+        <div><strong>6+</strong><span>Years Experience</span></div>
+        <div><strong>HD</strong><span>&amp; Airbrush Certified</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What we offer</span>
+      <h2>Our Services</h2>
+      <p>Six specialities, one studio — every detail considered, from skin prep to the final pin in your dupatta.</p>
+    </div>
+
+    <div class="services-tabs" id="tabButtons">
+      <button class="tab-btn active" data-tab="bridal">Bridal Makeup</button>
+      <button class="tab-btn" data-tab="hair">Hair</button>
+      <button class="tab-btn" data-tab="facial">Facial &amp; Skin</button>
+      <button class="tab-btn" data-tab="nails">Nails</button>
+      <button class="tab-btn" data-tab="mehendi">Mehendi</button>
+      <button class="tab-btn" data-tab="draping">Draping</button>
+    </div>
+
+    <div class="tab-panel active" data-panel="bridal">
+      <div class="service-grid">
+        <div class="service-card"><h4>South Indian Bridal</h4><p>Temple jewellery styling with a rich, traditional palette.</p></div>
+        <div class="service-card"><h4>North Indian Bridal</h4><p>Bold eyes, dewy base — classic North Indian wedding glam.</p></div>
+        <div class="service-card"><h4>Traditional Bridal</h4><p>Timeless looks rooted in regional bridal customs.</p></div>
+        <div class="service-card"><h4>HD Bridal Makeup</h4><p>Camera-ready, long-wear high-definition finish.</p></div>
+        <div class="service-card"><h4>Airbrush Bridal Makeup</h4><p>Featherlight, breathable, full-day coverage.</p></div>
+        <div class="service-card"><h4>Reception Makeup</h4><p>Glamorous evening look for the after-party.</p></div>
+        <div class="service-card"><h4>Engagement Makeup</h4><p>Soft glam tailored to your ring ceremony outfit.</p></div>
+        <div class="service-card"><h4>Haldi Ceremony Makeup</h4><p>Waterproof, sweat-proof, yellow-theme ready.</p></div>
+        <div class="service-card"><h4>Mehendi Ceremony Makeup</h4><p>Fresh, natural tones that photograph beautifully.</p></div>
+        <div class="service-card"><h4>Sangeet Makeup</h4><p>Party-proof glam built to last through the dancing.</p></div>
+        <div class="service-card"><h4>Wedding Guest Makeup</h4><p>Polished looks for friends &amp; family attending.</p></div>
+        <div class="service-card"><h4>Bridesmaid Makeup</h4><p>Coordinated, complementary looks for the squad.</p></div>
+        <div class="service-card"><h4>Mother of Bride/Groom</h4><p>Elegant, age-appropriate makeup for the matriarchs.</p></div>
+        <div class="service-card"><h4>Groom Makeup</h4><p>Light grooming for a fresh, camera-ready groom.</p></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="hair">
+      <div class="service-grid">
+        <div class="service-card"><h4>Blow Dry</h4><p>Salon-finish volume and shine.</p></div>
+        <div class="service-card"><h4>Hair Styling</h4><p>Everyday and occasion-ready styling.</p></div>
+        <div class="service-card"><h4>Bridal Hair Styling</h4><p>Looks designed around your jewellery &amp; outfit.</p></div>
+        <div class="service-card"><h4>Juda (Bun) Hairstyle</h4><p>Classic and contemporary bun styles.</p></div>
+        <div class="service-card"><h4>Traditional Braid (Jada)</h4><p>South Indian-style braided elegance.</p></div>
+        <div class="service-card"><h4>Flower Hairstyle</h4><p>Gajra &amp; jasmine styling for a fresh, fragrant finish.</p></div>
+        <div class="service-card"><h4>Curling</h4><p>Soft waves to defined curls.</p></div>
+        <div class="service-card"><h4>Straightening</h4><p>Sleek, smooth, salon-grade straightening.</p></div>
+        <div class="service-card"><h4>Smoothening</h4><p>Frizz-free shine that lasts for months.</p></div>
+        <div class="service-card"><h4>Rebonding</h4><p>Long-term straight hair transformation.</p></div>
+        <div class="service-card"><h4>Keratin Treatment</h4><p>Strengthens &amp; smooths from root to tip.</p></div>
+        <div class="service-card"><h4>Hair Colouring</h4><p>Full colour in shades suited to your skin tone.</p></div>
+        <div class="service-card"><h4>Highlights</h4><p>Dimension and depth, subtly placed.</p></div>
+        <div class="service-card"><h4>Root Touch-up</h4><p>Quick refresh between full colour sessions.</p></div>
+        <div class="service-card"><h4>Hair Extensions</h4><p>Instant length &amp; volume for the big day.</p></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="facial">
+      <div class="service-grid">
+        <div class="service-card"><h4>Clean-up</h4><p>Quick refresh for everyday glow.</p></div>
+        <div class="service-card"><h4>Fruit Facial</h4><p>Gentle, nourishing, naturally brightening.</p></div>
+        <div class="service-card"><h4>Gold Facial</h4><p>Anti-ageing radiance treatment.</p></div>
+        <div class="service-card"><h4>Diamond Facial</h4><p>Deep exfoliation for instant glow.</p></div>
+        <div class="service-card"><h4>Pearl Facial</h4><p>Brightening &amp; soothing for dull skin.</p></div>
+        <div class="service-card"><h4>Silver Facial</h4><p>Cooling treatment for sensitive skin.</p></div>
+        <div class="service-card"><h4>Herbal Facial</h4><p>Ayurveda-inspired, calming botanicals.</p></div>
+        <div class="service-card"><h4>Chocolate Facial</h4><p>Antioxidant-rich hydration boost.</p></div>
+        <div class="service-card"><h4>Charcoal Facial</h4><p>Deep detox for oily, congested skin.</p></div>
+        <div class="service-card"><h4>Hydrafacial</h4><p>Medical-grade hydration &amp; exfoliation.</p></div>
+        <div class="service-card"><h4>Anti-ageing Facial</h4><p>Firming treatment for mature skin.</p></div>
+        <div class="service-card"><h4>Acne Facial</h4><p>Targeted care for breakout-prone skin.</p></div>
+        <div class="service-card"><h4>Brightening Facial</h4><p>Evens tone, restores radiance.</p></div>
+        <div class="service-card"><h4>Skin Polishing</h4><p>Smooths texture for a flawless base.</p></div>
+        <div class="service-card"><h4>De-tan Treatment</h4><p>Reverses sun damage, restores tone.</p></div>
+        <div class="service-card"><h4>Bleach</h4><p>Evens skin tone, reduces visible hair.</p></div>
+        <div class="service-card"><h4>Chemical Peel</h4><p>Professional resurfacing treatment.</p></div>
+        <div class="service-card"><h4>Microdermabrasion</h4><p>Exfoliation for renewed, smooth skin.</p></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="nails">
+      <div class="service-grid">
+        <div class="service-card"><h4>Manicure</h4><p>Classic care &amp; polish for hands.</p></div>
+        <div class="service-card"><h4>Pedicure</h4><p>Relaxing foot care &amp; polish.</p></div>
+        <div class="service-card"><h4>Spa Manicure</h4><p>Extended hydration &amp; massage ritual.</p></div>
+        <div class="service-card"><h4>Spa Pedicure</h4><p>Deep-soak pampering for tired feet.</p></div>
+        <div class="service-card"><h4>Gel Polish</h4><p>Chip-resistant, glossy long-wear colour.</p></div>
+        <div class="service-card"><h4>Nail Extensions</h4><p>Length &amp; strength, your choice of shape.</p></div>
+        <div class="service-card"><h4>Acrylic Nails</h4><p>Durable, sculpted nail enhancements.</p></div>
+        <div class="service-card"><h4>Nail Art</h4><p>Custom hand-painted designs.</p></div>
+        <div class="service-card"><h4>French Manicure</h4><p>The timeless classic finish.</p></div>
+        <div class="service-card"><h4>Nail Repair</h4><p>Fixes for chips, breaks &amp; lifting.</p></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="mehendi">
+      <div class="service-grid">
+        <div class="service-card"><h4>Bridal Mehendi</h4><p>Intricate full-hand &amp; foot designs.</p></div>
+        <div class="service-card"><h4>Arabic Mehendi</h4><p>Bold florals with negative space.</p></div>
+        <div class="service-card"><h4>Rajasthani Mehendi</h4><p>Dense traditional motifs &amp; patterns.</p></div>
+        <div class="service-card"><h4>Pakistani Mehendi</h4><p>Detailed, jewellery-style coverage.</p></div>
+        <div class="service-card"><h4>Indo-Arabic Mehendi</h4><p>A fusion of detail &amp; bold strokes.</p></div>
+        <div class="service-card"><h4>Simple Mehendi</h4><p>Minimal, elegant everyday designs.</p></div>
+        <div class="service-card"><h4>Festival Mehendi</h4><p>Quick designs for festive occasions.</p></div>
+        <div class="service-card"><h4>Guest Mehendi</h4><p>Fast, lovely designs for event guests.</p></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="draping">
+      <div class="service-grid">
+        <div class="service-card"><h4>Silk Saree Draping</h4><p>Crisp, structured pleats &amp; pallu.</p></div>
+        <div class="service-card"><h4>Kanjeevaram Draping</h4><p>Traditional South Indian silk styling.</p></div>
+        <div class="service-card"><h4>Bridal Saree Draping</h4><p>Designed to suit your blouse &amp; jewellery.</p></div>
+        <div class="service-card"><h4>Lehenga Draping</h4><p>Dupatta &amp; skirt set perfectly in place.</p></div>
+        <div class="service-card"><h4>Dupatta Draping</h4><p>Secure, elegant styles that hold all day.</p></div>
+        <div class="service-card"><h4>South Indian Bridal Drape</h4><p>Authentic regional draping style.</p></div>
+        <div class="service-card"><h4>Maharashtrian Draping</h4><p>The classic Nauvari-inspired drape.</p></div>
+        <div class="service-card"><h4>Bengali Draping</h4><p>Traditional aanchal &amp; pleat styling.</p></div>
+        <div class="service-card"><h4>Gujarati Draping</h4><p>Front-pallu styling, beautifully set.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="packages" id="packages">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Wedding packages</span>
+      <h2>Ceremony-by-Ceremony Packages</h2>
+      <p>Every function has its own mood — here's how we style each one, season after season.</p>
+    </div>
+    <div class="pkg-grid">
+      <div class="pkg-card featured">
+        <span class="pkg-tag">Signature</span>
+        <h3>Bridal Package</h3>
+        <ul>
+          <li>Bridal HD / Airbrush makeup</li>
+          <li>Bridal hairstyle + accessories</li>
+          <li>Saree / lehenga &amp; dupatta draping</li>
+          <li>Jewellery setting &amp; eyelashes</li>
+          <li>Mehendi &amp; nail polish</li>
+          <li>Touch-up kit through the day</li>
+          <li>Groom &amp; family makeup add-on</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <span class="pkg-tag">Function</span>
+        <h3>Haldi Ceremony</h3>
+        <ul>
+          <li>Waterproof, sweat-proof makeup</li>
+          <li>Fresh flower hairstyle</li>
+          <li>Simple jewellery setting</li>
+          <li>Yellow-theme styling</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <span class="pkg-tag">Function</span>
+        <h3>Mehendi Ceremony</h3>
+        <ul>
+          <li>Natural, dewy makeup</li>
+          <li>Braided hairstyle</li>
+          <li>Floral jewellery styling</li>
+          <li>On-site mehendi application</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <span class="pkg-tag">Function</span>
+        <h3>Sangeet Ceremony</h3>
+        <ul>
+          <li>Glam, dance-proof makeup</li>
+          <li>Party-ready hairstyle</li>
+          <li>Glitter eye detailing</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <span class="pkg-tag">Function</span>
+        <h3>Reception</h3>
+        <ul>
+          <li>HD or airbrush makeup</li>
+          <li>Western-inspired hairstyle</li>
+          <li>Designer saree or gown draping</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <span class="pkg-tag">Function</span>
+        <h3>Engagement</h3>
+        <ul>
+          <li>Soft glam makeup</li>
+          <li>Elegant hairstyle</li>
+          <li>Jewellery setting</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <span class="pkg-tag">Function</span>
+        <h3>Saree Function</h3>
+        <ul>
+          <li>Traditional saree draping</li>
+          <li>Soft glam makeup</li>
+          <li>Elegant hairstyle</li>
+          <li>Jewellery setting</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <span class="pkg-tag">Function</span>
+        <h3>Baby Shower</h3>
+        <ul>
+          <li>Soft, glowing makeup</li>
+          <li>Comfortable all-day hairstyle</li>
+          <li>Saree or gown draping</li>
+          <li>Floral jewellery styling</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="packages" id="testimonials">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Client Love</span>
+      <h2>What Our Brides Say</h2>
+      <p>Real words from real brides — scrolling automatically, hover to pause.</p>
+    </div>
+
+    <div class="testi-marquee">
+      <div class="testi-track">
+        <div class="testi-card"><div class="stars">★★★★★</div><p>"The HD bridal makeup stayed perfect right through my muhurtham photos — I didn't need a single touch-up all day."</p><div class="who"><strong>Manasa</strong>Karimnagar</div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p>"They did my hairstyle and saree draping for the reception and it held beautifully through the night, even on the dance floor."</p><div class="who"><strong>Jyothi</strong>Jagtial</div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p>"My engagement look was so soft and elegant, exactly what I asked for. The team really listens to what you want."</p><div class="who"><strong>Swathi</strong>Warangal</div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p>"Booked them for my sister's haldi and mehendi — the floral hairstyle and bangles were gorgeous, our photos came out amazing."</p><div class="who"><strong>Vaishali</strong>Nizamabad</div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p>"The bridal mehendi design was so detailed, and the airbrush makeup lasted the whole wedding without fading."</p><div class="who"><strong>Vaidehi</strong>Siddipet</div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p>"From the sangeet glam to the bridal look the next day, every single style was on point. A truly stress-free experience."</p><div class="who"><strong>Jagruthi</strong>Metpalli</div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p>"Loved how natural yet camera-ready my makeup looked for the wedding reception. I got so many compliments that day."</p><div class="who"><strong>Mrudula</strong>Karimnagar</div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p>"The team travelled to our function and still gave studio-quality bridal makeup and hairstyling. Highly recommend them."</p><div class="who"><strong>Swathi</strong>Siddipet</div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p>"My traditional braid with fresh flowers was beautifully done for the wedding — it held perfectly through all the rituals."</p><div class="who"><strong>Manasa</strong>Warangal</div></div>
+        <div class="testi-card"><div class="stars">★★★★★</div><p>"Professional, punctual and so talented. The bridal draping and jewellery setting were absolutely picture-perfect."</p><div class="who"><strong>Jyothi</strong>Nizamabad</div></div>
+        <!-- duplicated set for a seamless infinite scroll -->
+        <div class="testi-card" aria-hidden="true"><div class="stars">★★★★★</div><p>"The HD bridal makeup stayed perfect right through my muhurtham photos — I didn't need a single touch-up all day."</p><div class="who"><strong>Manasa</strong>Karimnagar</div></div>
+        <div class="testi-card" aria-hidden="true"><div class="stars">★★★★★</div><p>"They did my hairstyle and saree draping for the reception and it held beautifully through the night, even on the dance floor."</p><div class="who"><strong>Jyothi</strong>Jagtial</div></div>
+        <div class="testi-card" aria-hidden="true"><div class="stars">★★★★★</div><p>"My engagement look was so soft and elegant, exactly what I asked for. The team really listens to what you want."</p><div class="who"><strong>Swathi</strong>Warangal</div></div>
+        <div class="testi-card" aria-hidden="true"><div class="stars">★★★★★</div><p>"Booked them for my sister's haldi and mehendi — the floral hairstyle and bangles were gorgeous, our photos came out amazing."</p><div class="who"><strong>Vaishali</strong>Nizamabad</div></div>
+        <div class="testi-card" aria-hidden="true"><div class="stars">★★★★★</div><p>"The bridal mehendi design was so detailed, and the airbrush makeup lasted the whole wedding without fading."</p><div class="who"><strong>Vaidehi</strong>Siddipet</div></div>
+        <div class="testi-card" aria-hidden="true"><div class="stars">★★★★★</div><p>"From the sangeet glam to the bridal look the next day, every single style was on point. A truly stress-free experience."</p><div class="who"><strong>Jagruthi</strong>Metpalli</div></div>
+        <div class="testi-card" aria-hidden="true"><div class="stars">★★★★★</div><p>"Loved how natural yet camera-ready my makeup looked for the wedding reception. I got so many compliments that day."</p><div class="who"><strong>Mrudula</strong>Karimnagar</div></div>
+        <div class="testi-card" aria-hidden="true"><div class="stars">★★★★★</div><p>"The team travelled to our function and still gave studio-quality bridal makeup and hairstyling. Highly recommend them."</p><div class="who"><strong>Swathi</strong>Siddipet</div></div>
+        <div class="testi-card" aria-hidden="true"><div class="stars">★★★★★</div><p>"My traditional braid with fresh flowers was beautifully done for the wedding — it held perfectly through all the rituals."</p><div class="who"><strong>Manasa</strong>Warangal</div></div>
+        <div class="testi-card" aria-hidden="true"><div class="stars">★★★★★</div><p>"Professional, punctual and so talented. The bridal draping and jewellery setting were absolutely picture-perfect."</p><div class="who"><strong>Jyothi</strong>Nizamabad</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <span class="eyebrow">Get in touch</span>
+      <h2 style="margin:0.8rem 0 1.8rem; font-size:2.2rem;">Book Your Appointment</h2>
+
+      <div class="info-row">
+        <div class="ic">☏</div>
+        <div><h4>Call / WhatsApp</h4><a href="https://wa.me/919052331623" target="_blank" rel="noopener">+91 90523 31623</a></div>
+      </div>
+      <div class="info-row">
+        <div class="ic">@</div>
+        <div><h4>Instagram</h4><a href="https://instagram.com/shyny_makeover" target="_blank">@shyny_makeover</a></div>
+      </div>
+      <div class="info-row">
+        <div class="ic">⚲</div>
+        <div><h4>Studio Location</h4><p>Karimnagar, Telangana</p></div>
+      </div>
+      <div class="info-row">
+        <div class="ic">⏲</div>
+        <div><h4>Hours</h4><p>Mon – Sun, 9:00 AM – 8:00 PM (by appointment)</p></div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <label>Your Name</label>
+      <input type="text" placeholder="e.g. Priya Sharma">
+      <label>Phone Number</label>
+      <input type="tel" placeholder="+91">
+      <label>Service Needed</label>
+      <select>
+        <option>Bridal Makeup</option>
+        <option>Engagement Makeup</option>
+        <option>Hair Styling</option>
+        <option>Mehendi</option>
+        <option>Saree Draping</option>
+        <option>Facial / Skin Care</option>
+        <option>Other</option>
+      </select>
+      <label>Event Date</label>
+      <input type="date">
+      <label>Message</label>
+      <textarea placeholder="Tell us about your event..."></textarea>
+      <button type="button" class="btn btn-solid" onclick="window.open('https://wa.me/919052331623','_blank')">Send Enquiry on WhatsApp</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="#home" class="logo">ShynyMakeover</a>
+  <div class="foot-links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#packages">Packages</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <div class="social-row">
+    <a href="https://facebook.com" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.16 8.44 9.94v-7.03H7.9v-2.91h2.54V9.84c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.91h-2.34V22c4.78-.78 8.44-4.94 8.44-9.94Z"/></svg>
+    </a>
+    <a href="https://x.com" target="_blank" rel="noopener" class="social-btn" aria-label="Twitter / X">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M18.9 2H22l-7.2 8.2L23 22h-6.6l-5.2-6.8L5 22H2l7.7-8.8L1 2h6.7l4.7 6.2L18.9 2Zm-2.3 18h1.8L8.5 4H6.6l10 16Z"/></svg>
+    </a>
+    <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-btn" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M19 3A2 2 0 0 1 21 5v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2ZM8.34 9.6H5.67V18h2.67ZM7 5.7a1.54 1.54 0 1 0 0 3.08A1.54 1.54 0 0 0 7 5.7ZM18.34 18v-4.6c0-2.46-1.31-3.6-3.07-3.6a2.65 2.65 0 0 0-2.4 1.32h-.04V9.6H10.3c.04.78 0 8.4 0 8.4h2.53v-4.7c0-.25.02-.5.1-.68.2-.5.66-1.02 1.43-1.02 1.01 0 1.41.77 1.41 1.9V18Z"/></svg>
+    </a>
+    <a href="https://pinterest.com" target="_blank" rel="noopener" class="social-btn" aria-label="Pinterest">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.64 19.3c-.07-.83-.13-2.1.03-3 .14-.66.93-4.2.93-4.2s-.24-.48-.24-1.18c0-1.1.64-1.93 1.43-1.93.68 0 1 .5 1 1.12 0 .68-.43 1.7-.66 2.65-.19.78.4 1.42 1.17 1.42 1.4 0 2.48-1.48 2.48-3.6 0-1.88-1.35-3.2-3.28-3.2-2.24 0-3.55 1.67-3.55 3.4 0 .67.26 1.4.58 1.79a.24.24 0 0 1 .06.23c-.06.27-.21.86-.24.98-.04.15-.13.19-.3.11-1.12-.52-1.82-2.16-1.82-3.48 0-2.84 2.06-5.44 5.94-5.44 3.12 0 5.55 2.22 5.55 5.2 0 3.1-1.95 5.6-4.66 5.6-.91 0-1.77-.47-2.06-1.03 0 0-.49 1.87-.6 2.33-.22.83-.81 1.87-1.21 2.51A10 10 0 1 0 12 2Z"/></svg>
+    </a>
+    <a href="https://instagram.com/shyny_makeover" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.46.66.25 1.21.6 1.76 1.15.5.5.84 1 1.1 1.65.24.6.4 1.3.46 2.43C21.92 8.8 22 9.15 22 11.87v.26c0 2.72-.08 3.06-.13 4.12-.06 1.13-.22 1.83-.46 2.43-.26.65-.6 1.15-1.1 1.65-.55.55-1.1.9-1.76 1.15-.64.24-1.37.41-2.43.46-1.06.05-1.4.06-4.12.06h-.26c-2.65 0-3.02-.01-4.05-.06-1.13-.06-1.83-.22-2.43-.46-.65-.26-1.16-.6-1.66-1.1a4.6 4.6 0 0 1-1.15-1.7c-.24-.6-.4-1.3-.46-2.43C2.08 15.2 2 14.85 2 12.13v-.26c0-2.72.08-3.06.13-4.12.06-1.13.22-1.83.46-2.43.26-.66.6-1.16 1.15-1.66.5-.5 1-.84 1.66-1.1.6-.24 1.3-.4 2.43-.46C8.8 2.08 9.15 2 11.87 2Zm0 1.8c-2.6 0-3.02.02-4.07.07-.96.05-1.49.2-1.84.34-.46.18-.8.4-1.15.74-.34.35-.55.69-.74 1.15-.14.35-.3.88-.34 1.84-.05 1.05-.07 1.47-.07 4.07s.02 3.02.07 4.07c.05.96.2 1.49.34 1.84.18.46.4.8.74 1.15.35.34.69.55 1.15.74.35.14.88.3 1.84.34 1.05.05 1.47.07 4.07.07s3.02-.02 4.07-.07c.96-.05 1.49-.2 1.84-.34.46-.18.8-.4 1.15-.74.34-.35.55-.69.74-1.15.14-.35.3-.88.34-1.84.05-1.05.07-1.47.07-4.07s-.02-3.02-.07-4.07c-.05-.96-.2-1.49-.34-1.84a3 3 0 0 0-.74-1.15 3 3 0 0 0-1.15-.74c-.35-.14-.88-.3-1.84-.34A57 57 0 0 0 12 3.8Zm0 3.5a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4Zm0 1.8a2.9 2.9 0 1 0 0 5.8 2.9 2.9 0 0 0 0-5.8Zm5.84-3.2a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z"/></svg>
+    </a>
+  </div>
+
+  <div class="copy">© 2026 ShynyMakeover · Lavanya Anil Reddy · Karimnagar, Telangana</div>
+</footer>
+
+<a href="https://wa.me/919052331623" class="wa-float" aria-label="Chat on WhatsApp" target="_blank">☏</a>
+<button type="button" class="music-float" id="musicToggle" aria-label="Stop background music" aria-pressed="true">
+  <span class="bars"><span></span><span></span><span></span></span>
+</button>
+
+<script src="script.js"></script>
+
+
+</body>
+</html>
