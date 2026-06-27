@@ -3,8 +3,6 @@
   const gallerySlides = [
     {src:'assets/p1.jpg', alt:'Bridal close-up makeup look', cap:'Bridal Close-up'},
     {src:'assets/p7.jpg', alt:'Traditional bridal look with maang tikka and layered necklaces', cap:'Traditional Bridal Look'},
-    {src:'assets/p2.jpg', alt:'Bride getting ready in pastel outfit', cap:'Getting Ready'},
-    {src:'assets/p3.jpg', alt:'Floral bridal bun hairstyle', cap:'Floral Bun'},
     {src:'assets/p8.jpg', alt:'Traditional braided bridal hairstyle', cap:'Traditional Braid'},
     {src:'assets/p4.jpg', alt:'Bridal back embroidery and hairstyle detail', cap:'Reception Saree'},
     {src:'assets/p5.jpg', alt:'Bride in silk saree with traditional jewellery', cap:'Silk Saree Look'},
