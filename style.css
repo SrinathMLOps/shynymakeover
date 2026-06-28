@@ -14,13 +14,17 @@
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{
+    scroll-behavior:smooth;
+    background:var(--deep);
+  }
   body{
     background:var(--deep);
     color:var(--ivory);
     font-family:'Jost',sans-serif;
     font-weight:300;
     overflow-x:hidden;
+    min-height:100vh;
   }
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
