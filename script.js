@@ -86,13 +86,13 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
   }
 }
 
-// ===== MUSIC PLAYER - MUTED AUTOPLAY =====
+// ===== MUSIC PLAYER - AUTOPLAY WITH SOUND =====
 (function() {
   let ctx = null;
   let masterGain = null;
   let oscillators = [];
   let isPlaying = false;
-  let isMuted = true; // Start muted
+  let isMuted = false; // Start unmuted (with sound)
   const btn = document.getElementById('musicToggle');
   
   if (!btn) return;
@@ -130,22 +130,18 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       filter.frequency.value = 2400;
       
       masterGain = ctx.createGain();
-      masterGain.gain.setValueAtTime(0.0001, ctx.currentTime);
-      
-      // If not muted, fade in; if muted, stay silent
-      if (!isMuted) {
-        masterGain.gain.linearRampToValueAtTime(0.6, ctx.currentTime + 2);
-      }
+      // Start at full volume if not muted, silent if muted
+      masterGain.gain.setValueAtTime(isMuted ? 0.0001 : 0.6, ctx.currentTime);
       
       filter.connect(masterGain);
       masterGain.connect(ctx.destination);
 
       // Chords (pad)
       const chords = [
-        [261.63, 329.63, 392.00, 493.88],
-        [220.00, 261.63, 329.63, 392.00],
-        [174.61, 220.00, 261.63, 329.63],
-        [196.00, 246.94, 293.66, 392.00],
+        [261.63, 329.63, 392, 493.88],
+        [220, 261.63, 329.63, 392],
+        [174.61, 220, 261.63, 329.63],
+        [196, 246.94, 293.66, 392],
       ];
 
       chords[0].forEach((freq) => {
@@ -232,15 +228,15 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     }
   }
 
-  // Initialize - start muted autoplay after page loads
+  // Initialize - start autoplay with sound after page loads
   setTimeout(() => {
     if (initAudioContext()) {
-      playSound(); // Start playing silently
+      playSound(); // Start playing with sound
       updateButton();
     }
   }, 1000);
 
-  // Button click - toggle between muted and unmuted
+  // Button click - toggle mute/unmute
   btn.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -250,7 +246,7 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     }
     
     if (!isPlaying) {
-      // Start playing
+      // Start playing if not already
       isMuted = false;
       playSound();
     } else {
