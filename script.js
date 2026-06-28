@@ -315,73 +315,63 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
 
 // ===== LOAD STORED REVIEWS INTO TESTIMONIALS =====
 (function() {
-  // Delay to ensure DOM is fully ready
-  setTimeout(() => {
-    const testiTrack = document.querySelector('.testi-track');
-    if (!testiTrack) {
-      console.log('Testimonials track not found');
+  // Run after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadReviews);
+  } else {
+    loadReviews();
+  }
+
+  function loadReviews() {
+    const track = document.getElementById('testiTrack');
+    if (!track) return;
+
+    console.log('Loading reviews...');
+    const reviews = JSON.parse(localStorage.getItem('shyniReviews')) || [];
+    
+    if (reviews.length === 0) {
+      console.log('No reviews found');
       return;
     }
 
-    console.log('Starting review loader...');
+    console.log('Found', reviews.length, 'reviews');
 
-    // Load reviews from localStorage
-    const reviews = JSON.parse(localStorage.getItem('shyniReviews')) || [];
+    // Find the insertion point (before the comment that marks duplicate set)
+    const firstOriginalCard = track.querySelector('.testi-card:not([aria-hidden])');
+    const firstHiddenCard = track.querySelector('.testi-card[aria-hidden="true"]');
     
-    console.log('Found', reviews.length, 'reviews in localStorage');
-    
-    if (reviews.length > 0) {
-      console.log('Loading reviews:', reviews);
-      
-      // Get existing cards (only original ones, not duplicates)
-      const allCards = Array.from(testiTrack.querySelectorAll('.testi-card'));
-      const visibleCards = allCards.filter(card => !card.hasAttribute('aria-hidden'));
-      const hiddenCards = allCards.filter(card => card.hasAttribute('aria-hidden'));
-      
-      console.log('Visible cards:', visibleCards.length, 'Hidden cards:', hiddenCards.length);
-      
-      // Create review cards HTML for visible set
-      const reviewHTMLs = reviews.map(r => {
-        const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-        return `<div class="testi-card"><div class="stars">${stars}</div><p>"${r.review}"</p><div class="who"><strong>${r.name}</strong>${r.city}</div></div>`;
-      });
-
-      // Add new reviews to visible set
-      if (visibleCards.length > 0) {
-        const lastVisibleCard = visibleCards[visibleCards.length - 1];
-        reviewHTMLs.forEach(html => {
-          const tempDiv = document.createElement('div');
-          tempDiv.innerHTML = html;
-          lastVisibleCard.parentNode.insertBefore(tempDiv.firstChild, lastVisibleCard.nextSibling);
-        });
-        console.log('Added reviews to visible set');
-      }
-
-      // Create review cards HTML for hidden duplicate set
-      const hiddenReviewHTMLs = reviews.map(r => {
-        const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-        return `<div class="testi-card" aria-hidden="true"><div class="stars">${stars}</div><p>"${r.review}"</p><div class="who"><strong>${r.name}</strong>${r.city}</div></div>`;
-      });
-
-      // Add to hidden duplicate set
-      hiddenReviewHTMLs.forEach(html => {
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = html;
-        testiTrack.appendChild(tempDiv.firstChild);
-      });
-      console.log('Added reviews to hidden duplicate set');
-
-      // Recalculate animation duration
-      const newCardCount = testiTrack.querySelectorAll('.testi-card').length;
-      const cardWidth = 340 + 14; // card width + gap
-      const estimatedWidth = (newCardCount / 2) * cardWidth;
-      const newDuration = (estimatedWidth / 200) * 46;
-      
-      console.log('New total cards:', newCardCount, 'New duration:', newDuration + 's');
-      testiTrack.style.animationDuration = newDuration + 's';
-      console.log('Animation duration updated');
-    } else {
-      console.log('No reviews found in localStorage');
+    if (!firstHiddenCard) {
+      console.log('Could not find insertion point');
+      return;
     }
-  }, 150);
+
+    // Add each review to the visible set
+    reviews.forEach(review => {
+      const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+      const card = document.createElement('div');
+      card.className = 'testi-card';
+      card.innerHTML = `<div class="stars">${stars}</div><p>"${review.review}"</p><div class="who"><strong>${review.name}</strong>${review.city}</div>`;
+      track.insertBefore(card, firstHiddenCard);
+      console.log('Added review:', review.name);
+    });
+
+    // Add reviews to hidden duplicate set too
+    reviews.forEach(review => {
+      const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+      const card = document.createElement('div');
+      card.className = 'testi-card';
+      card.setAttribute('aria-hidden', 'true');
+      card.innerHTML = `<div class="stars">${stars}</div><p>"${review.review}"</p><div class="who"><strong>${review.name}</strong>${review.city}</div>`;
+      track.appendChild(card);
+    });
+
+    // Update animation duration
+    const totalCards = track.querySelectorAll('.testi-card').length;
+    const cardWidth = 340 + 14; // width + gap
+    const trackWidth = (totalCards / 2) * cardWidth;
+    const duration = Math.max(46, (trackWidth / 150) * 40);
+    track.style.animationDuration = duration + 's';
+    
+    console.log('Reviews loaded! Total cards:', totalCards, 'Duration:', duration + 's');
+  }
 })();
