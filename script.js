@@ -86,37 +86,44 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
   }
 }
 
-// ===== MUSIC PLAYER =====
+// ===== MUSIC PLAYER - MUTED AUTOPLAY =====
 (function() {
   let ctx = null;
   let masterGain = null;
   let oscillators = [];
   let isPlaying = false;
+  let isMuted = true; // Start muted
   const btn = document.getElementById('musicToggle');
   
   if (!btn) return;
 
-  function setup() {
+  function initAudioContext() {
     try {
       ctx = new (window.AudioContext || window.webkitAudioContext)();
       return true;
     } catch (e) {
-      console.log('No audio support');
+      console.log('AudioContext error:', e);
       return false;
     }
   }
 
   function playSound() {
-    if (!ctx || isPlaying) return;
+    if (isPlaying) return;
     
-    try {
-      // Resume if suspended
-      if (ctx.state === 'suspended') {
-        ctx.resume();
-      }
+    if (!ctx) {
+      if (!initAudioContext()) return;
+    }
+    
+    if (ctx.state === 'suspended') {
+      ctx.resume().then(() => {
+        playSound();
+      }).catch(() => {});
+      return;
+    }
 
+    try {
       isPlaying = true;
-      btn.classList.add('playing');
+      updateButton();
 
       const filter = ctx.createBiquadFilter();
       filter.type = 'lowpass';
@@ -124,7 +131,12 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       
       masterGain = ctx.createGain();
       masterGain.gain.setValueAtTime(0.0001, ctx.currentTime);
-      masterGain.gain.linearRampToValueAtTime(0.7, ctx.currentTime + 2);
+      
+      // If not muted, fade in; if muted, stay silent
+      if (!isMuted) {
+        masterGain.gain.linearRampToValueAtTime(0.6, ctx.currentTime + 2);
+      }
+      
       filter.connect(masterGain);
       masterGain.connect(ctx.destination);
 
@@ -136,26 +148,30 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
         [196.00, 246.94, 293.66, 392.00],
       ];
 
-      chords[0].forEach((freq, i) => {
+      chords[0].forEach((freq) => {
         const osc = ctx.createOscillator();
         osc.type = 'sine';
-        osc.frequency.value = freq;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
         const g = ctx.createGain();
-        g.gain.value = 0;
+        g.gain.setValueAtTime(0, ctx.currentTime);
         osc.connect(g);
         g.connect(filter);
-        osc.start();
+        osc.start(ctx.currentTime);
         oscillators.push(osc);
 
-        // Swell effect
         const swell = () => {
+          if (!isPlaying) return;
           const now = ctx.currentTime;
           g.gain.cancelScheduledValues(now);
-          g.gain.linearRampToValueAtTime(0.03, now + 3);
+          g.gain.setValueAtTime(g.gain.value, now);
+          g.gain.linearRampToValueAtTime(0.04, now + 3);
           g.gain.linearRampToValueAtTime(0, now + 7);
         };
         swell();
-        setInterval(swell, 7000);
+        const swellInterval = setInterval(() => {
+          if (!isPlaying) clearInterval(swellInterval);
+          else swell();
+        }, 7000);
       });
 
       // Melody
@@ -168,52 +184,98 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
         const freq = melody[step % melody.length];
         step++;
 
-        const osc = ctx.createOscillator();
-        osc.type = 'triangle';
-        osc.frequency.value = freq;
-        const g = ctx.createGain();
-        const now = ctx.currentTime;
-        g.gain.setValueAtTime(0.08, now);
-        g.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
-        osc.connect(g);
-        g.connect(filter);
-        osc.start(now);
-        osc.stop(now + 1.2);
+        try {
+          const osc = ctx.createOscillator();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          const g = ctx.createGain();
+          const now = ctx.currentTime;
+          g.gain.setValueAtTime(0.1, now);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+          osc.connect(g);
+          g.connect(filter);
+          osc.start(now);
+          osc.stop(now + 1.2);
+        } catch (e) {}
         
-        setTimeout(playNote, 700);
+        if (isPlaying) {
+          setTimeout(playNote, 700);
+        }
       };
 
       playNote();
     } catch (e) {
       console.log('Play error:', e);
-      isPlaying = false;
-      btn.classList.remove('playing');
+      stopSound();
     }
   }
 
   function stopSound() {
     isPlaying = false;
-    btn.classList.remove('playing');
+    updateButton();
     
     oscillators.forEach(o => {
-      try { o.stop(); } catch (e) {}
+      try { 
+        o.stop(ctx.currentTime);
+      } catch (e) {}
     });
     oscillators = [];
   }
 
-  // Initialize
-  setup();
+  function updateButton() {
+    if (isPlaying && !isMuted) {
+      btn.classList.add('playing');
+      btn.setAttribute('aria-pressed', 'true');
+    } else {
+      btn.classList.remove('playing');
+      btn.setAttribute('aria-pressed', 'false');
+    }
+  }
+
+  // Initialize - start muted autoplay after page loads
+  setTimeout(() => {
+    if (initAudioContext()) {
+      playSound(); // Start playing silently
+      updateButton();
+    }
+  }, 1000);
+
+  // Button click - toggle between muted and unmuted
   btn.addEventListener('click', (e) => {
     e.preventDefault();
-    if (isPlaying) {
-      stopSound();
-    } else {
-      playSound();
+    e.stopPropagation();
+    
+    if (!ctx) {
+      initAudioContext();
     }
+    
+    if (!isPlaying) {
+      // Start playing
+      isMuted = false;
+      playSound();
+    } else {
+      // Toggle mute
+      isMuted = !isMuted;
+      
+      if (isMuted && masterGain) {
+        // Mute - fade out
+        masterGain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.5);
+      } else if (masterGain) {
+        // Unmute - fade in
+        masterGain.gain.linearRampToValueAtTime(0.6, ctx.currentTime + 1);
+      }
+    }
+    
+    updateButton();
   });
 
   // Resume on interaction for iOS
-  document.addEventListener('touchstart', () => {
-    if (ctx && ctx.state === 'suspended') ctx.resume();
-  }, { once: true, passive: true });
+  const resumeAudio = () => {
+    if (ctx && ctx.state === 'suspended') {
+      ctx.resume().catch(() => {});
+    }
+  };
+
+  document.addEventListener('touchstart', resumeAudio, { once: true, passive: true });
+  document.addEventListener('click', resumeAudio, { once: true });
 })();
