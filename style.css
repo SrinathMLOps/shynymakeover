@@ -350,8 +350,8 @@
     display: flex;
     gap: 1.4rem;
     width: max-content;
-    animation: scroll-left 40s linear infinite;
-    -webkit-animation: scroll-left 40s linear infinite;
+    animation: scroll-left 28s linear infinite;
+    -webkit-animation: scroll-left 28s linear infinite;
   }
 
   @keyframes scroll-left {
@@ -435,8 +435,8 @@
       min-width: 220px;
     }
     .marquee-track {
-      animation: scroll-left 25s linear infinite;
-      -webkit-animation: scroll-left 25s linear infinite;
+      animation: scroll-left 18s linear infinite;
+      -webkit-animation: scroll-left 18s linear infinite;
     }
   }
 
