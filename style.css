@@ -350,8 +350,8 @@
     display: flex;
     gap: 1.4rem;
     width: max-content;
-    animation: scroll-left 50s linear infinite;
-    -webkit-animation: scroll-left 50s linear infinite;
+    animation: scroll-left 90s linear infinite;
+    -webkit-animation: scroll-left 90s linear infinite;
   }
 
   @keyframes scroll-left {
@@ -435,8 +435,8 @@
       min-width: 220px;
     }
     .marquee-track {
-      animation: scroll-left 35s linear infinite;
-      -webkit-animation: scroll-left 35s linear infinite;
+      animation: scroll-left 70s linear infinite;
+      -webkit-animation: scroll-left 70s linear infinite;
     }
   }
 
@@ -463,7 +463,7 @@
     display:flex; 
     gap:1.4rem; 
     width:max-content; 
-    animation:marquee-scroll 70s linear infinite;
+    animation:marquee-scroll 120s linear infinite;
     animation-play-state: running;
   }
 
@@ -499,7 +499,7 @@
   .testi-card .who strong{display:block; font-family:'Jost',sans-serif; font-size:0.92rem; font-weight:600; color:var(--gold-light); margin-bottom:0.15rem; letter-spacing:0.02em;}
   @media (max-width:620px){
     .testi-card{flex:0 0 270px;}
-    .testi-track{animation-duration:50s;}
+    .testi-track{animation-duration:90s;}
   }
   @media (prefers-reduced-motion: reduce){
     .testi-track{animation:none;}
