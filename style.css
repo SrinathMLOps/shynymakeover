@@ -466,6 +466,24 @@
     animation:marquee-scroll 46s linear infinite;
     animation-play-state: running;
   }
+
+  @keyframes marquee-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-50%));
+    }
+  }
+
+  @-webkit-keyframes marquee-scroll {
+    0% {
+      -webkit-transform: translateX(0);
+    }
+    100% {
+      -webkit-transform: translateX(calc(-50%));
+    }
+  }
   
   .testi-marquee:hover .testi-track{
     animation-play-state:paused;

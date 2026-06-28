@@ -299,6 +299,21 @@ document.getElementById('reviewForm').addEventListener('submit', function(e) {
     return;
   }
   
+  // Create review object
+  const reviewData = {
+    name: name,
+    city: city,
+    service: service,
+    rating: parseInt(rating),
+    review: review,
+    timestamp: new Date().getTime()
+  };
+  
+  // Save to localStorage
+  let reviews = JSON.parse(localStorage.getItem('shyniReviews')) || [];
+  reviews.push(reviewData);
+  localStorage.setItem('shyniReviews', JSON.stringify(reviews));
+  
   // Send to WhatsApp (you can replace this with email or backend API)
   const message = `*New Review Submission*%0A%0A*Name:* ${name}%0A*City:* ${city}%0A*Service:* ${service}%0A*Rating:* ${'★'.repeat(rating)}%0A*Review:* ${review}`;
   

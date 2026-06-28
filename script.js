@@ -311,3 +311,52 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     updateButton();
   });
 })();
+
+
+// ===== LOAD STORED REVIEWS INTO TESTIMONIALS =====
+(function() {
+  const testiTrack = document.querySelector('.testi-track');
+  if (!testiTrack) return;
+
+  // Load reviews from localStorage
+  const reviews = JSON.parse(localStorage.getItem('shyniReviews')) || [];
+  
+  if (reviews.length > 0) {
+    // Create review cards and add to testimonials
+    const reviewCards = reviews.map(r => {
+      const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+      return `<div class="testi-card" data-review-id="${r.timestamp}"><div class="stars">${stars}</div><p>"${r.review}"</p><div class="who"><strong>${r.name}</strong>${r.city}</div></div>`;
+    }).join('');
+
+    // Find the duplicate set marker comment and insert new reviews before it
+    const existingCards = testiTrack.querySelectorAll('.testi-card:not([aria-hidden="true"])');
+    if (existingCards.length > 0) {
+      const lastVisibleCard = existingCards[existingCards.length - 1];
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = reviewCards;
+      while (tempDiv.firstChild) {
+        lastVisibleCard.parentNode.insertBefore(tempDiv.firstChild, lastVisibleCard.nextSibling);
+      }
+    }
+
+    // Also add to hidden duplicate set for seamless scroll
+    const hiddenCards = testiTrack.querySelectorAll('.testi-card[aria-hidden="true"]');
+    if (hiddenCards.length > 0) {
+      const firstHiddenCard = hiddenCards[0];
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = reviewCards;
+      const cards = tempDiv.querySelectorAll('.testi-card');
+      cards.forEach(card => {
+        card.setAttribute('aria-hidden', 'true');
+        firstHiddenCard.parentNode.insertBefore(card, firstHiddenCard);
+      });
+    }
+
+    // Recalculate animation duration based on new number of cards
+    const totalCards = testiTrack.querySelectorAll('.testi-card').length;
+    const cardWidth = 340 + 14; // card width + gap
+    const trackWidth = totalCards / 2 * cardWidth;
+    const duration = (trackWidth / 200) * 46; // Scale from original 46s for full scroll
+    testiTrack.style.animationDuration = duration + 's';
+  }
+})();
