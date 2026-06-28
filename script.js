@@ -86,13 +86,13 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
   }
 }
 
-// ===== MUSIC PLAYER - AUTOPLAY WITH SOUND =====
+// ===== MUSIC PLAYER - FULL AUTOPLAY WITH SOUND =====
 (function() {
   let ctx = null;
   let masterGain = null;
   let oscillators = [];
   let isPlaying = false;
-  let isMuted = false; // Start unmuted (with sound)
+  let isMuted = false;
   const btn = document.getElementById('musicToggle');
   
   if (!btn) return;
@@ -115,9 +115,7 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     }
     
     if (ctx.state === 'suspended') {
-      ctx.resume().then(() => {
-        playSound();
-      }).catch(() => {});
+      ctx.resume().then(playSound).catch(() => {});
       return;
     }
 
@@ -130,7 +128,6 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       filter.frequency.value = 2400;
       
       masterGain = ctx.createGain();
-      // Start at full volume if not muted, silent if muted
       masterGain.gain.setValueAtTime(isMuted ? 0.0001 : 0.6, ctx.currentTime);
       
       filter.connect(masterGain);
@@ -228,13 +225,27 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     }
   }
 
-  // Initialize - start autoplay with sound after page loads
-  setTimeout(() => {
-    if (initAudioContext()) {
-      playSound(); // Start playing with sound
-      updateButton();
+  // Trigger autoplay on first user interaction
+  const autoPlayOnce = () => {
+    if (!isPlaying && initAudioContext()) {
+      playSound();
     }
-  }, 1000);
+    document.removeEventListener('click', autoPlayOnce);
+    document.removeEventListener('touchstart', autoPlayOnce);
+  };
+
+  // Start on any click/touch anywhere on page (required by browser policy)
+  document.addEventListener('click', autoPlayOnce, { once: true });
+  document.addEventListener('touchstart', autoPlayOnce, { once: true, passive: true });
+
+  // Also try on DOMContentLoaded and after 2 seconds
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      if (!isPlaying && initAudioContext()) {
+        playSound();
+      }
+    }, 500);
+  });
 
   // Button click - toggle mute/unmute
   btn.addEventListener('click', (e) => {
@@ -246,32 +257,18 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     }
     
     if (!isPlaying) {
-      // Start playing if not already
       isMuted = false;
       playSound();
     } else {
-      // Toggle mute
       isMuted = !isMuted;
       
       if (isMuted && masterGain) {
-        // Mute - fade out
         masterGain.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.5);
       } else if (masterGain) {
-        // Unmute - fade in
         masterGain.gain.linearRampToValueAtTime(0.6, ctx.currentTime + 1);
       }
     }
     
     updateButton();
   });
-
-  // Resume on interaction for iOS
-  const resumeAudio = () => {
-    if (ctx && ctx.state === 'suspended') {
-      ctx.resume().catch(() => {});
-    }
-  };
-
-  document.addEventListener('touchstart', resumeAudio, { once: true, passive: true });
-  document.addEventListener('click', resumeAudio, { once: true });
 })();
