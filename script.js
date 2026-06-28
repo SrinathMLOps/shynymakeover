@@ -315,48 +315,62 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
 
 // ===== LOAD STORED REVIEWS INTO TESTIMONIALS =====
 (function() {
-  const testiTrack = document.querySelector('.testi-track');
-  if (!testiTrack) return;
-
-  // Load reviews from localStorage
-  const reviews = JSON.parse(localStorage.getItem('shyniReviews')) || [];
-  
-  if (reviews.length > 0) {
-    // Create review cards and add to testimonials
-    const reviewCards = reviews.map(r => {
-      const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-      return `<div class="testi-card" data-review-id="${r.timestamp}"><div class="stars">${stars}</div><p>"${r.review}"</p><div class="who"><strong>${r.name}</strong>${r.city}</div></div>`;
-    }).join('');
-
-    // Find the duplicate set marker comment and insert new reviews before it
-    const existingCards = testiTrack.querySelectorAll('.testi-card:not([aria-hidden="true"])');
-    if (existingCards.length > 0) {
-      const lastVisibleCard = existingCards[existingCards.length - 1];
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = reviewCards;
-      while (tempDiv.firstChild) {
-        lastVisibleCard.parentNode.insertBefore(tempDiv.firstChild, lastVisibleCard.nextSibling);
-      }
+  // Delay to ensure DOM is fully ready
+  setTimeout(() => {
+    const testiTrack = document.querySelector('.testi-track');
+    if (!testiTrack) {
+      console.log('Testimonials track not found');
+      return;
     }
 
-    // Also add to hidden duplicate set for seamless scroll
-    const hiddenCards = testiTrack.querySelectorAll('.testi-card[aria-hidden="true"]');
-    if (hiddenCards.length > 0) {
-      const firstHiddenCard = hiddenCards[0];
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = reviewCards;
-      const cards = tempDiv.querySelectorAll('.testi-card');
-      cards.forEach(card => {
-        card.setAttribute('aria-hidden', 'true');
-        firstHiddenCard.parentNode.insertBefore(card, firstHiddenCard);
+    // Load reviews from localStorage
+    const reviews = JSON.parse(localStorage.getItem('shyniReviews')) || [];
+    
+    if (reviews.length > 0) {
+      console.log('Loading', reviews.length, 'reviews');
+      
+      // Get existing cards count (original set, not duplicates)
+      const allCards = testiTrack.querySelectorAll('.testi-card');
+      const hiddenCards = Array.from(allCards).filter(card => card.hasAttribute('aria-hidden'));
+      const originalCardsCount = allCards.length - hiddenCards.length;
+      
+      // Create review cards HTML
+      const reviewHTMLs = reviews.map(r => {
+        const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+        return `<div class="testi-card"><div class="stars">${stars}</div><p>"${r.review}"</p><div class="who"><strong>${r.name}</strong>${r.city}</div></div>`;
       });
-    }
 
-    // Recalculate animation duration based on new number of cards
-    const totalCards = testiTrack.querySelectorAll('.testi-card').length;
-    const cardWidth = 340 + 14; // card width + gap
-    const trackWidth = totalCards / 2 * cardWidth;
-    const duration = (trackWidth / 200) * 46; // Scale from original 46s for full scroll
-    testiTrack.style.animationDuration = duration + 's';
-  }
+      // Add to end of visible cards (before hidden set)
+      const firstHiddenCard = Array.from(allCards).find(card => card.hasAttribute('aria-hidden'));
+      if (firstHiddenCard) {
+        // Insert before first hidden card
+        reviewHTMLs.forEach(html => {
+          const div = document.createElement('div');
+          div.innerHTML = html;
+          firstHiddenCard.parentNode.insertBefore(div.firstChild, firstHiddenCard);
+        });
+      }
+
+      // Also add to hidden duplicate set
+      const hiddenReviewHTMLs = reviews.map(r => {
+        const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+        return `<div class="testi-card" aria-hidden="true"><div class="stars">${stars}</div><p>"${r.review}"</p><div class="who"><strong>${r.name}</strong>${r.city}</div></div>`;
+      });
+
+      hiddenReviewHTMLs.forEach(html => {
+        const div = document.createElement('div');
+        div.innerHTML = html;
+        testiTrack.appendChild(div.firstChild);
+      });
+
+      // Recalculate animation duration
+      const newCardCount = testiTrack.querySelectorAll('.testi-card').length;
+      const cardWidth = 340 + 14; // card width + gap
+      const estimatedWidth = (newCardCount / 2) * cardWidth;
+      const newDuration = (estimatedWidth / 200) * 46;
+      
+      console.log('New card count:', newCardCount, 'Duration:', newDuration);
+      testiTrack.style.animationDuration = newDuration + 's';
+    }
+  }, 100);
 })();
