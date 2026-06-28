@@ -129,8 +129,8 @@
     max-width:1180px; margin:0 auto; padding:0.9rem 6vw;
     display:flex; align-items:center; justify-content:space-between;
   }
-  .logo{font-family:'Italianno',cursive; font-size:3rem; color:#ffffff; line-height:1; text-shadow:0 0 18px rgba(255,255,255,0.35);}
-  .logo span{display:block; font-family:'Jost',sans-serif; font-size:0.62rem; letter-spacing:0.32em; text-transform:uppercase; color:var(--gold-dim); margin-top:0.15rem;}
+  .logo{font-family:'Italianno',cursive; font-size:4.2rem; font-weight:900; color:#ffffff; line-height:1; text-shadow:0 0 30px rgba(255,255,255,0.6), 0 0 15px rgba(255,45,120,0.4); letter-spacing:0.05em;}
+  .logo span{display:block; font-family:'Jost',sans-serif; font-size:0.8rem; letter-spacing:0.4em; text-transform:uppercase; color:#ffffff; margin-top:0.25rem; font-weight:700; text-shadow:0 0 20px rgba(255,45,120,0.5);}
   nav.links{display:flex; gap:2.1rem; font-size:0.82rem; letter-spacing:0.04em;}
   nav.links a{position:relative; padding:0.3rem 0; opacity:0.95; transition:opacity 0.25s, color 0.25s;}
   nav.links a:hover{opacity:1; color:var(--gold-light);}
