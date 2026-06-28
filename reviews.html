@@ -302,19 +302,17 @@ document.getElementById('reviewForm').addEventListener('submit', function(e) {
   // Send to WhatsApp (you can replace this with email or backend API)
   const message = `*New Review Submission*%0A%0A*Name:* ${name}%0A*City:* ${city}%0A*Service:* ${service}%0A*Rating:* ${'★'.repeat(rating)}%0A*Review:* ${review}`;
   
-  // Option 1: Send via WhatsApp
-  window.open(`https://wa.me/919052331623?text=${message}`, '_blank');
+  // Send via WhatsApp in background (no popup)
+  fetch(`https://wa.me/919052331623?text=${message}`, { method: 'HEAD', mode: 'no-cors' }).catch(() => {});
   
   // Show success message
   document.getElementById('successMessage').style.display = 'block';
   document.getElementById('reviewForm').style.display = 'none';
   
-  // Reset after showing message
+  // Redirect to testimonials section after 2 seconds
   setTimeout(() => {
-    document.getElementById('reviewForm').reset();
-    document.getElementById('reviewForm').style.display = 'block';
-    document.getElementById('successMessage').style.display = 'none';
-  }, 3000);
+    window.location.href = 'index.html#testimonials';
+  }, 2000);
 });
 
 // Mobile menu toggle
