@@ -340,6 +340,15 @@
   @media (max-width:620px){.pkg-grid{grid-template-columns:1fr;}}
 
   /* ---------- gallery auto-scroll marquee ---------- */
+  #gallery {
+    padding-top: 8rem !important;
+    padding-bottom: 6rem;
+  }
+
+  #gallery .section-head {
+    margin-bottom: 4rem;
+  }
+
   .gallery-marquee {
     position: relative;
     overflow: hidden;
